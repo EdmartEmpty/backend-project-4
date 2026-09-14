@@ -1,3 +1,5 @@
+[![my-actions](https://github.com/EdmartEmpty/backend-project-4/actions/workflows/my-actions.yml/badge.svg)](https://github.com/EdmartEmpty/backend-project-4/actions/workflows/my-actions.yml)
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=EdmartEmpty_backend-project-4&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=EdmartEmpty_backend-project-4)
 # Загрузчик страниц (JS)
 
 [![hexlet-check](https://github.com/EdmartEmpty/backend-project-4/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/EdmartEmpty/backend-project-4/actions)
