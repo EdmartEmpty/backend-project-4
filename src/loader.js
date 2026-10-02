@@ -11,6 +11,7 @@ import resourseLoader from './resourсeLoader.js'
 import { Listr } from 'listr2'
 import debug from 'debug'
 import checkDirPath from './helpers/checkDirPath.js'
+import { error } from 'console'
 const debugPageLoader = debug('page-loader')
 
 export default async function loader(adress, output = process.cwd()) {
@@ -45,7 +46,8 @@ export default async function loader(adress, output = process.cwd()) {
   try {
     debugPageLoader(`Мы начали работать с такой вот директрией ${output}`)
     if (!checkDirPath(outputPath)) {
-      await fs.mkdir(outputPath, { recursive: true })
+      // await fs.mkdir(outputPath, { recursive: true })
+      throw error
     }
   }
   catch (error) {
