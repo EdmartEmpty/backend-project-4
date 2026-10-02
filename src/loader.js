@@ -71,8 +71,12 @@ export default async function loader(adress, output = process.cwd()) {
   })
 
   debugPageLoader(chalk.blue('start queue Taks All'))
-
-  await queueTasks.run()
-  console.log(`Page was successfully downloaded into '${pathPageHtml}'`)
-  await fs.writeFile(pathPageHtml, $.html())
+  try {
+    await queueTasks.run()
+    console.log(`Page was successfully downloaded into '${pathPageHtml}'`)
+    await fs.writeFile(pathPageHtml, $.html())
+  }
+  catch (error) {
+    throw new Error(`Ошибка файловой системы  ${error}`, { cause: error })
+  }
 }
