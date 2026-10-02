@@ -69,10 +69,9 @@ export default async function loader(adress, output = process.cwd()) {
   const queueTasks = new Listr(arrTasks, {
     concurrent: true,
   })
-
+  await queueTasks.run()
   debugPageLoader(chalk.blue('start queue Taks All'))
   try {
-    await queueTasks.run()
     console.log(`Page was successfully downloaded into '${pathPageHtml}'`)
     await fs.writeFile(pathPageHtml, $.html())
   }
