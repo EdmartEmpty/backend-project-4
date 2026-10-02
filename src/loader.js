@@ -10,6 +10,7 @@ import getRightName from './getRightName.js'
 import resourseLoader from './resourсeLoader.js'
 import { Listr } from 'listr2'
 import debug from 'debug'
+import checkDirPath from './helpers/checkDirPath.js'
 const debugPageLoader = debug('page-loader')
 
 export default async function loader(adress, output = process.cwd()) {
@@ -42,14 +43,14 @@ export default async function loader(adress, output = process.cwd()) {
 
   const outputPath = path.resolve(output)
   try {
-    const statOutPutPath = await fs.stat(outputPath)
-    if (!statOutPutPath.isDirectory()) {
-      await fs.mkdir(outputPath)
+    debugPageLoader(`Мы начали работать с такой вот директрией ${output}`)
+    if (!checkDirPath(outputPath)) {
+      await fs.mkdir(outputPath, { recursive: true })
     }
   }
   catch (error) {
     debugPageLoader(`случилось ошибка вот тут именно вот такая с директорией ${outputPath}`)
-    throw new Error('Ошибка директории', { cause: error })
+    throw new Error(`Ошибка директории ${outputPath} ${error.message}`, { cause: error })
   }
   const nameHtmlFile = getRightName(adress, '.html')
   const pathPageHtml = path.join(outputPath, nameHtmlFile)
