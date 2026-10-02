@@ -41,7 +41,7 @@ export default async function loader(adress, output = process.cwd()) {
   }
 
   const outputPath = path.resolve(output)
-  await fs.mkdir(outputPath, { recursive: true })
+
   try {
     await fs.access(outputPath, fs.constants.W_OK)
   }
@@ -53,8 +53,9 @@ export default async function loader(adress, output = process.cwd()) {
   const nameHtmlFile = getRightName(adress, '.html')
   const pathPageHtml = path.join(outputPath, nameHtmlFile)
 
-  const pathFiles = path.join(output, getRightName(adress, '_files'))
+  const pathFiles = path.join(outputPath, getRightName(adress, '_files'))
 
+  await fs.mkdir(outputPath, { recursive: true })
   await fs.mkdir(pathFiles, { recursive: true })
 
   const $ = cheerio.load(response.data)
