@@ -6,5 +6,5 @@ lint:
 	npm run lint
 fix:
 	npm run fix
-test:
-	npm test
+test-debug:
+	npm run test:debug

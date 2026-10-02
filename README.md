@@ -1,5 +1,4 @@
 [![my-actions](https://github.com/EdmartEmpty/backend-project-4/actions/workflows/my-actions.yml/badge.svg)](https://github.com/EdmartEmpty/backend-project-4/actions/workflows/my-actions.yml)
-[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=EdmartEmpty_backend-project-4&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=EdmartEmpty_backend-project-4)
 # Загрузчик страниц (JS)
 
 [![hexlet-check](https://github.com/EdmartEmpty/backend-project-4/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/EdmartEmpty/backend-project-4/actions)
@@ -20,12 +19,14 @@
 ```bash
 git clone https://github.com/EdmartEmpty/backend-project-4.git
 cd backend-project-4
+npm ci
+
 ```
 
 ## Использование
 
 <!-- Добавьте примеры запуска и запись asciinema — именно это смотрит работодатель -->
-
+[![asciicast](https://asciinema.org/a/YCpfuADPLwd7vSLH.svg)](https://asciinema.org/a/YCpfuADPLwd7vSLH)
 ---
 
 <details>

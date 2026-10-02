@@ -14,7 +14,7 @@
   "author": "",
   "type": "module",
   "main": "index.js",
-  "bin":{
+  "bin": {
     "page-loader": "bin/page-loader.js"
   },
   "scripts": {
@@ -22,12 +22,15 @@
     "fix": "npx eslint --fix .",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "debug": "DEBUG=page-loader,axios bin/page-loader.js",
+    "test:debug": "DEBUG=nock*,page-loader,axios jest"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.5.1",
     "@stylistic/eslint-plugin": "^5.10.0",
+    "axios-debug-log": "^1.0.0",
     "eslint": "^10.10.0",
     "globals": "^17.12.0",
     "jest": "^30.5.1",
@@ -35,7 +38,10 @@
   },
   "dependencies": {
     "axios": "^1.20.0",
+    "chalk": "^6.0.1",
     "cheerio": "^1.2.0",
-    "commander": "^15.0.0"
+    "commander": "^15.0.0",
+    "debug": "^4.4.3",
+    "listr2": "^11.1.0"
   }
 }
