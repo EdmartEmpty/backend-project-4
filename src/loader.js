@@ -41,22 +41,18 @@ export default async function loader(adress, output = process.cwd()) {
   }
 
   const outputPath = path.resolve(output)
+  const nameHtmlFile = getRightName(adress, '.html')
+  const pathPageHtml = path.join(outputPath, nameHtmlFile)
+  const pathFiles = path.join(output, getRightName(adress, '_files'))
 
   try {
-    await fs.access(outputPath, fs.constants.W_OK)
+    await fs.mkdir(outputPath, { recursive: true })
+    await fs.mkdir(pathFiles, { recursive: true })
   }
   catch (error) {
     debugPageLoader(`случилось ошибка вот тут именно вот такая ${error}`)
     throw new Error('Ошибка директории', { cause: error })
   }
-
-  const nameHtmlFile = getRightName(adress, '.html')
-  const pathPageHtml = path.join(outputPath, nameHtmlFile)
-
-  const pathFiles = path.join(output, getRightName(adress, '_files'))
-
-  await fs.mkdir(outputPath, { recursive: true })
-  await fs.mkdir(pathFiles, { recursive: true })
 
   const $ = cheerio.load(response.data)
 
