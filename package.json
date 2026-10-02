@@ -15,9 +15,10 @@
   "type": "module",
   "main": "index.js",
   "bin": {
-    "page-loader": "bin/page-loader.js"
+    "page-loader": "./bin/page-loader.js"
   },
   "scripts": {
+    "page-loader":"node ./bin/page-loader.js",
     "lint": "npx eslint .",
     "fix": "npx eslint --fix .",
     "test": "jest",

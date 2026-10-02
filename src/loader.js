@@ -13,12 +13,14 @@ import debug from 'debug'
 const debugPageLoader = debug('page-loader')
 
 export default async function loader(adress, output = process.cwd()) {
+  debugPageLoader(`Вот тут начали работать с таким вот url:${adress}`)
   let url
   try {
     url = new URL(adress)
   }
   catch (error) {
-    throw new Error('Ввведен не существующий адрес', { cause: error })
+    debugPageLoader(`Вот тут получили ошибку полсе проверки url:${adress}`)
+    throw new Error('Некорректный URL', { cause: error })
   }
 
   let response
@@ -35,7 +37,7 @@ export default async function loader(adress, output = process.cwd()) {
     const status = error.response ? error.response.status : error
     debugPageLoader(`Вот именно такой статус ${error.status}`)
 
-    throw new Error(`Ошбика со стороны сервера: статус ошибки ${status}`, { cause: error })
+    throw new Error(`Ошибка сервера: номер ошибки ${status}`, { cause: error })
   }
 
   const outputPath = path.resolve(output)
@@ -45,7 +47,7 @@ export default async function loader(adress, output = process.cwd()) {
   }
   catch (error) {
     debugPageLoader(`случилось ошибка вот тут именно вот такая ${error}`)
-    throw new Error('ошибка директории', { cause: error })
+    throw new Error('Ошибка директории', { cause: error })
   }
 
   const nameHtmlFile = getRightName(adress, '.html')

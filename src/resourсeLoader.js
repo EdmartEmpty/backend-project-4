@@ -10,7 +10,7 @@ import chalk from 'chalk'
 const debugPageLoader = debug('page-loader')
 
 export default function resourceLoader(tegName, attrName, page, adress, pathFiles) {
-  debugPageLoader(chalk.red('Do something well'))
+  debugPageLoader(chalk.red(`Вот тут значит начали обрабатывать такой вот тег:${tegName}`))
   const arrTasks = []
   page(tegName).each((i, el) => {
     const link = page(el).attr(attrName)
@@ -42,7 +42,7 @@ export default function resourceLoader(tegName, attrName, page, adress, pathFile
           url: rightUrlLink,
           responseType: 'arraybuffer',
         })
-        debugPageLoader(chalk.green('Create new Tasks resource'))
+        debugPageLoader(chalk.green('Вот тут создалась новая задача'))
         await fs.writeFile(localPathName, response.data)
       },
     }

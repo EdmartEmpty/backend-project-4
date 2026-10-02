@@ -99,13 +99,13 @@ test('Test loader picture', async () => {
   expect(fileFromUnreall).toEqual(fileFromFixtures)
 })
 test('test Invalid Url on loader', () => {
-  expect(async () => await loader('Invalid Url')).rejects.toThrow('Ввведен не существующий адрес')
+  expect(async () => await loader('Invalid Url')).rejects.toThrow('Некорректный URL')
 })
 test('cannot write in directory test', async () => {
   await fs.chmod(tempDirPath, '100')
   nock('http://www.example.com').get('/').reply(200)
 
-  await expect(loader('http://www.example.com', tempDirPath)).rejects.toThrow('ошибка директории')
+  await expect(loader('http://www.example.com', tempDirPath)).rejects.toThrow('Ошибка директории')
 })
 
 test('bad status server', async () => {

@@ -5,11 +5,11 @@ import loader from '../src/loader.js'
 
 program.version('1.0.0.')
   .description('page loader by Edmart :)')
-  .option('-o, --output [dir]', 'output dir (default: "/app)', process.cwd())
+  .option('-o, --output [dir]', 'output dir (default: "/app)')
   .argument('<url>')
   .action(async (url) => {
     try {
-      const option = program.opts().output
+      const option = program.opts().output ? program.opts().output : './app'
       await loader(url, option)
     }
     catch (error) {

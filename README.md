@@ -1,4 +1,3 @@
-[![my-actions](https://github.com/EdmartEmpty/backend-project-4/actions/workflows/my-actions.yml/badge.svg)](https://github.com/EdmartEmpty/backend-project-4/actions/workflows/my-actions.yml)
 # Загрузчик страниц (JS)
 
 [![hexlet-check](https://github.com/EdmartEmpty/backend-project-4/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/EdmartEmpty/backend-project-4/actions)
@@ -20,6 +19,7 @@
 git clone https://github.com/EdmartEmpty/backend-project-4.git
 cd backend-project-4
 npm ci
+npm run page-loader <--------- установка в домашнюю директорию в директорию app
 
 ```
 
@@ -27,6 +27,10 @@ npm ci
 
 <!-- Добавьте примеры запуска и запись asciinema — именно это смотрит работодатель -->
 [![asciicast](https://asciinema.org/a/YCpfuADPLwd7vSLH.svg)](https://asciinema.org/a/YCpfuADPLwd7vSLH)
+Пример работы 
+[![asciicast](https://asciinema.org/a/blDrlJuHI14lYgG0.svg)](https://asciinema.org/a/blDrlJuHI14lYgG0)
+Пример вывода ошибок
+[![asciicast](https://asciinema.org/a/2qRYTJV7whg9XhHr.svg)](https://asciinema.org/a/2qRYTJV7whg9XhHr)
 ---
 
 <details>
