@@ -42,11 +42,14 @@ export default async function loader(adress, output = process.cwd()) {
 
   const outputPath = path.resolve(output)
   try {
-    await fs.mkdir(outputPath, { recursive: true })
+    const statOutPutPath = await fs.stat(outputPath)
+    if (!statOutPutPath.isDirectory()) {
+      await fs.mkdir(outputPath)
+    }
   }
   catch (error) {
     debugPageLoader(`случилось ошибка вот тут именно вот такая с директорией ${outputPath}`)
-    throw error
+    throw new Error('Ошибка директории', { cause: error })
   }
   const nameHtmlFile = getRightName(adress, '.html')
   const pathPageHtml = path.join(outputPath, nameHtmlFile)

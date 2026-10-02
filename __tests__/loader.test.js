@@ -45,7 +45,7 @@ test('Test loader picture', async () => {
   expect(fileFromUnreall).toEqual(fileFromFixtures)
 })
 
-test('Test loader picture', async () => {
+test('Test loader page', async () => {
   nock('https://ru.hexlet.io')
     .get('/courses')
     .reply(200, `
