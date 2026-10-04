@@ -67,6 +67,9 @@ test('Test loader page', async () => {
     <script src="https://ru.hexlet.io/packs/js/runtime.js"></script>
     </body>
 </html>`)
+  nock('https://ru.hexlet.io')
+    .get('/courses')
+    .reply(200, 'fake-html-inner-page-binary')
 
   nock('https://ru.hexlet.io')
     .get('/assets/professions/nodejs.png')
