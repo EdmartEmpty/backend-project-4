@@ -30,9 +30,9 @@ export default function resourceLoader(tegName, attrName, page, adress, pathFile
 
     page(el).attr(attrName, `${getRightName(adress, '_files')}/${rightNameLink}`)
 
-    if (extLink === '') {
-      return
-    }
+    // if (extLink === '') {
+    //   return
+    // }
 
     const task = {
       title: rightUrlLink.toString(),
