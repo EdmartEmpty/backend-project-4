@@ -25,15 +25,13 @@ export default function resourceLoader(tegName, attrName, page, adress, pathFile
     }
 
     const rightNameLink = getRightName(link, '.html', adress)
-    // const localPathName = `${pathFiles}/${rightNameLink}`
+
     const localPathName = path.join(pathFiles, rightNameLink)
 
     page(el).attr(attrName, `${getRightName(adress, '_files')}/${rightNameLink}`)
-
-    // if (extLink === '') {
-    //   return
-    // }
-
+    if (extLink === '') {
+      return
+    }
     const task = {
       title: rightUrlLink.toString(),
       exitOnError: false,

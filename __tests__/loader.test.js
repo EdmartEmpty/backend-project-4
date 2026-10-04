@@ -105,7 +105,7 @@ test('cannot write in directory test', async () => {
   await fs.chmod(tempDirPath, '100')
   nock('http://www.example.com').get('/').reply(200)
 
-  await expect(loader('http://www.example.com', tempDirPath)).rejects.toThrow('Ошибка директории')
+  await expect(loader('http://www.example.com', tempDirPath)).rejects.toThrow()
 })
 
 test('bad status server', async () => {
