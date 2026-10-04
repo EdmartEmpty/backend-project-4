@@ -43,6 +43,18 @@ export default async function loader(adress, output = process.cwd()) {
   }
 
   const outputPath = path.resolve(output)
+  try {
+    const stats = await fs.stat(outputPath)
+    if (!stats.isDirectory()) {
+      throw new Error(`Error: ${outputPath} is a file, not a directory`)
+    }
+  }
+  catch (error) {
+    if (error.code !== 'ENOENT') {
+      throw error
+    }
+    // Если код ENOENT (папки нет) — мы её создадим на следующем шаге, ошибку не выбрасываем.
+  }
   // try {
   //   debugPageLoader(`Мы начали работать с такой вот директрией ${output}`)
   //   if (!checkDirPath(outputPath)) {
