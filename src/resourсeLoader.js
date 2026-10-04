@@ -25,7 +25,8 @@ export default function resourceLoader(tegName, attrName, page, adress, pathFile
     }
 
     const rightNameLink = getRightName(link, '.html', adress)
-    const localPathName = `${pathFiles}/${rightNameLink}`
+    // const localPathName = `${pathFiles}/${rightNameLink}`
+    const localPathName = path.join(pathFiles, rightNameLink)
 
     page(el).attr(attrName, `${getRightName(adress, '_files')}/${rightNameLink}`)
 
