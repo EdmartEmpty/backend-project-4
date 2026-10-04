@@ -19,18 +19,16 @@ export default function resourceLoader(tegName, attrName, page, adress, pathFile
     }
 
     const rightUrlLink = new URL(link, adress)
-    // const extLink = path.extname(link)
     if (rightUrlLink.origin !== new URL(adress).origin) {
+      debugPageLoader(`Вот эта страница ${rightUrlLink} не прошла потому что она с другого ресурcа `)
       return
     }
-    // if (extLink === '') {
-    //   return
-    // }
-    const rightNameLink = getRightName(link, '.html', adress)
 
+    const rightNameLink = getRightName(link, '.html', adress)
     const localPathName = path.join(pathFiles, rightNameLink)
 
     page(el).attr(attrName, `${getRightName(adress, '_files')}/${rightNameLink}`)
+    debugPageLoader(`Здесь значит мы уже поменяли нашему тегу ${tegName} атрибут на ${getRightName(adress, '_files')}/${rightNameLink}`)
 
     const task = {
       title: rightUrlLink.toString(),
@@ -41,7 +39,7 @@ export default function resourceLoader(tegName, attrName, page, adress, pathFile
           url: rightUrlLink,
           responseType: 'arraybuffer',
         })
-        debugPageLoader(chalk.green('Вот тут создалась новая задача'))
+        debugPageLoader(chalk.green(`Вот тут создалась новая задача с таким адресом url:${rightUrlLink}`))
         await fs.writeFile(localPathName, response.data)
       },
     }

@@ -19,14 +19,14 @@
 git clone https://github.com/EdmartEmpty/backend-project-4.git
 cd backend-project-4
 npm ci
-npm run page-loader <--------- установка в домашнюю директорию в директорию app
+npm run page-loader
 
 ```
 
 ## Использование
 
 <!-- Добавьте примеры запуска и запись asciinema — именно это смотрит работодатель -->
-[![asciicast](https://asciinema.org/a/YCpfuADPLwd7vSLH.svg)](https://asciinema.org/a/YCpfuADPLwd7vSLH)
+
 Пример работы 
 [![asciicast](https://asciinema.org/a/blDrlJuHI14lYgG0.svg)](https://asciinema.org/a/blDrlJuHI14lYgG0)
 Пример вывода ошибок

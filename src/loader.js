@@ -77,7 +77,7 @@ export default async function loader(adress, output = process.cwd()) {
     concurrent: true,
   })
   await queueTasks.run()
-  debugPageLoader(chalk.blue('start queue Taks All'))
+  debugPageLoader(chalk.blue(`Здесь все задачи выполнились, ура!!!`))
   try {
     console.log(`Page was successfully downloaded into '${pathPageHtml}'`)
     await fs.writeFile(pathPageHtml, $.html())
