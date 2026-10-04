@@ -10,8 +10,6 @@ import getRightName from './getRightName.js'
 import resourseLoader from './resourсeLoader.js'
 import { Listr } from 'listr2'
 import debug from 'debug'
-import checkDirPath from './helpers/checkDirPath.js'
-import { error } from 'console'
 const debugPageLoader = debug('page-loader')
 
 export default async function loader(adress, output = process.cwd()) {
@@ -43,48 +41,26 @@ export default async function loader(adress, output = process.cwd()) {
   }
 
   const outputPath = path.resolve(output)
+
   try {
-    const stats = await fs.stat(outputPath)
-    if (!stats.isDirectory()) {
-      throw new Error(`Error: ${outputPath} is a file, not a directory`)
-    }
+    await fs.access(outputPath, fs.constants.W_OK)
   }
   catch (error) {
-    if (error.code !== 'ENOENT') {
-      throw error
-    }
-    // Если код ENOENT (папки нет) — мы её создадим на следующем шаге, ошибку не выбрасываем.
+    debugPageLoader(`Целевая директория не существует или недоступна: ${error.message}`)
+    throw error
   }
-  // try {
-  //   debugPageLoader(`Мы начали работать с такой вот директрией ${output}`)
-  //   if (!checkDirPath(outputPath)) {
-  //     await fs.mkdir(outputPath, { recursive: true })
-  //     throw error
-  //   }
-  // }
-  // catch (error) {
-  //   debugPageLoader(`случилось ошибка вот тут именно вот такая с директорией ${outputPath}`)
-  //   throw new Error(`Ошибка директории ${outputPath} ${error.message}`, { cause: error })
-  // }
+
   const nameHtmlFile = getRightName(adress, '.html')
   const pathPageHtml = path.join(outputPath, nameHtmlFile)
-  const pathFiles = path.join(output, getRightName(adress, '_files'))
-  // const checkPathOutPath = await checkDirPath(outputPath)
-  // debugPageLoader(`что тут у нас в ${checkPathOutPath}`)
+  const pathFiles = path.join(outputPath, getRightName(adress, '_files'))
+
   try {
-    debugPageLoader(`Мы вот тут перед тем как проверить !!!${outputPath}`)
-    // if (!checkPathOutPath) {
-    //   debugPageLoader(`Отказано нет такой директории!!!${outputPath}`)
-    //   throw error
-    // }
-    await fs.mkdir(outputPath, { recursive: true })
     await fs.mkdir(pathFiles, { recursive: true })
   }
   catch (error) {
-    debugPageLoader(`случилось ошибка вот тут именно вот такая ${error}`)
-    throw new Error('Ошибка директории', { cause: error })
+    debugPageLoader(`Ошибка при создании папки ресурсов: ${error.message}`)
+    throw error
   }
-
   const $ = cheerio.load(response.data)
 
   const arrTasks = []

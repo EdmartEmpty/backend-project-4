@@ -9,7 +9,7 @@ program.version('1.0.0.')
   .argument('<url>')
   .action(async (url) => {
     try {
-      const option = program.opts().output ? program.opts().output : './app'
+      const option = program.opts().output || process.cwd()
       await loader(url, option)
     }
     catch (error) {
