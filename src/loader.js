@@ -43,22 +43,28 @@ export default async function loader(adress, output = process.cwd()) {
   }
 
   const outputPath = path.resolve(output)
-  try {
-    debugPageLoader(`Мы начали работать с такой вот директрией ${output}`)
-    if (!checkDirPath(outputPath)) {
-      // await fs.mkdir(outputPath, { recursive: true })
-      throw error
-    }
-  }
-  catch (error) {
-    debugPageLoader(`случилось ошибка вот тут именно вот такая с директорией ${outputPath}`)
-    throw new Error(`Ошибка директории ${outputPath} ${error.message}`, { cause: error })
-  }
+  // try {
+  //   debugPageLoader(`Мы начали работать с такой вот директрией ${output}`)
+  //   if (!checkDirPath(outputPath)) {
+  //     await fs.mkdir(outputPath, { recursive: true })
+  //     throw error
+  //   }
+  // }
+  // catch (error) {
+  //   debugPageLoader(`случилось ошибка вот тут именно вот такая с директорией ${outputPath}`)
+  //   throw new Error(`Ошибка директории ${outputPath} ${error.message}`, { cause: error })
+  // }
   const nameHtmlFile = getRightName(adress, '.html')
   const pathPageHtml = path.join(outputPath, nameHtmlFile)
   const pathFiles = path.join(output, getRightName(adress, '_files'))
-
+  const checkPathOutPath = await checkDirPath(outputPath)
+  debugPageLoader(`что тут у нас в ${checkPathOutPath}`)
   try {
+    debugPageLoader(`Мы вот тут перед тем как проверить !!!${outputPath}`)
+    if (!checkPathOutPath) {
+      debugPageLoader(`Отказано нет такой директории!!!${outputPath}`)
+      throw error
+    }
     await fs.mkdir(pathFiles, { recursive: true })
   }
   catch (error) {
