@@ -9,7 +9,7 @@ import process from 'process'
 import loader from '../src/loader.js'
 import os from 'os'
 import nock from 'nock'
-import getRightName from '../src/getRightName.js'
+import getRightName from '../src/helpers/getRightName.js'
 
 nock.disableNetConnect()
 
@@ -102,7 +102,7 @@ test('Test loader page', async () => {
   expect(fileFromUnreall).toEqual(fileFromFixtures)
 })
 test('test Invalid Url on loader', () => {
-  expect(async () => await loader('Invalid Url')).rejects.toThrow('Некорректный URL')
+  expect(async () => await loader('Invalid Url')).rejects.toThrow('Invalid URL')
 })
 test('cannot write in directory test', async () => {
   await fs.chmod(tempDirPath, '100')

@@ -1,6 +1,6 @@
 import 'axios-debug-log'
 import { test, expect } from '@jest/globals'
-import getRightName from '../src/getRightName.js'
+import getRightName from '../src/helpers/getRightName.js'
 
 test('Test name website', async () => {
   const url = 'https://ru.hexlet.io/courses'

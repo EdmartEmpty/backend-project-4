@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from 'commander'
-import loader from '../src/loader.js'
+import loader from '../index.js'
 
 program.version('1.0.0.')
   .description('page loader by Edmart :)')
@@ -13,7 +13,7 @@ program.version('1.0.0.')
       await loader(url, option)
     }
     catch (error) {
-      console.error(`Ошибка при скачивании страницы: ${error.message}`)
+      console.error(`Failed to download page: ${error.message}`)
       process.exit(1)
     }
   })
