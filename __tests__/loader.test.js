@@ -9,7 +9,7 @@ import process from 'process'
 import loader from '../src/loader.js'
 import os from 'os'
 import nock from 'nock'
-import getRightName from '../src/helpers/getRightName.js'
+import { getPageName, getAssetName, getAssetsDir } from '../src/helpers/fileName.js'
 
 nock.disableNetConnect()
 
@@ -36,7 +36,7 @@ test('Test loader picture', async () => {
 </html>`)
   nock('https://ru.hexlet.io').get('/assets/professions/nodejs.png').reply(200, Buffer.from('fake-image-binary'))
   const url = 'https://ru.hexlet.io/courses'
-  const pathTemPage = path.join(tempDirPath, getRightName(url, '.html'))
+  const pathTemPage = path.join(tempDirPath, getPageName(url))
   await loader(url, tempDirPath)
 
   const fileFromUnreall = await fs.readFile(pathTemPage, 'utf-8')
@@ -92,7 +92,7 @@ test('Test loader page', async () => {
     .reply(200, Buffer.from('fake-js-binary'))
 
   const url = 'https://ru.hexlet.io/courses'
-  const pathTemPage = path.join(tempDirPath, getRightName(url, '.html'))
+  const pathTemPage = path.join(tempDirPath, getPageName(url))
 
   await loader(url, tempDirPath)
 

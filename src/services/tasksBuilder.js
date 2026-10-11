@@ -1,26 +1,30 @@
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-require('axios-debug-log')
-const axios = require('axios')
+import axios from 'axios'
+import { addLogger } from 'axios-debug-log'
 import fs from 'fs/promises'
 import debug from 'debug'
 const debugPageLoader = debug('page-loader')
 import chalk from 'chalk'
+
+addLogger(axios)
 
 export default function tasksBuilder(rightNameLinks) {
   const tasks = []
   for (let [rightUrlLink, localPathName] of rightNameLinks) {
     const task = {
       title: rightUrlLink.toString(),
-      exitOnError: false,
-      task: async () => {
-        const response = await axios({
+      task: () => {
+        return axios({
           method: 'get',
           url: rightUrlLink,
           responseType: 'arraybuffer',
-        })
-        debugPageLoader(chalk.green(`Created a new task for URL:${rightUrlLink}`))
-        await fs.writeFile(localPathName, response.data)
+        }).then((response) => {
+          debugPageLoader(chalk.green(`Created a new task for URL:${rightUrlLink}`))
+          return fs.writeFile(localPathName, response.data)
+        }).then(() => debugPageLoader(chalk.green(`Successfully wrote file to: ${localPathName}`)))
+          .catch((e) => {
+            debugPageLoader(chalk.red(`Task failed for ${rightUrlLink}: ${e.message}`))
+            throw e
+          })
       },
     }
     tasks.push(task)

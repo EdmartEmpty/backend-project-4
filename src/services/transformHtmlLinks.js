@@ -1,7 +1,7 @@
-import getRightName from '../helpers/getRightName.js'
 import path from 'path'
 import debug from 'debug'
 import chalk from 'chalk'
+import { getAssetName, getAssetsDir, getPageName } from '../helpers/fileName.js'
 const debugPageLoader = debug('page-loader')
 
 export default function transformHtmlLinks(elementType, attrName, page, address, pathFiles) {
@@ -20,11 +20,12 @@ export default function transformHtmlLinks(elementType, attrName, page, address,
       return
     }
 
-    const rightNameLink = getRightName(link, '.html', address)
+    const rightNameLink = attrName === 'href' ? getPageName(new URL(rightUrlLink)) : getAssetName(new URL(rightUrlLink))
     const localPathName = path.join(pathFiles, rightNameLink)
+    const asserDirName = getAssetsDir(address)
 
-    page(el).attr(attrName, `${getRightName(address, '_files')}/${rightNameLink}`)
-    debugPageLoader(`Updated attribute for tag ${elementType} to ${getRightName(address, '_files')}/${rightNameLink}`)
+    page(el).attr(attrName, `${asserDirName}/${rightNameLink}`)
+    debugPageLoader(`Updated attribute for tag ${elementType} to ${asserDirName}/${rightNameLink}`)
     rightNameLinks.push([rightUrlLink, localPathName])
   })
 

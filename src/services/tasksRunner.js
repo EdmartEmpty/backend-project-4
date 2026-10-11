@@ -4,11 +4,12 @@ import debug from 'debug'
 const debugPageLoader = debug('page-loader')
 import chalk from 'chalk'
 
-export default async function tasksRunner(rightNameLinks) {
+export default function tasksRunner(rightNameLinks) {
   const tasks = tasksBuilder(rightNameLinks)
   const queueTasks = new Listr(tasks, {
     concurrent: true,
   })
-  await queueTasks.run()
-  debugPageLoader(chalk.blue(`All tasks completed successfully!`))
+  return queueTasks.run().then(() => {
+    debugPageLoader(chalk.blue(`All tasks completed successfully!`))
+  })
 }

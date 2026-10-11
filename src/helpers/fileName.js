@@ -1,12 +1,12 @@
 import path from 'path'
 
-export default function getRightName(url, teg = '.html', baseName) {
-  const urlObject = new URL(url, baseName)
-  let urlAdressWithOutProtocol = urlObject.host + urlObject.pathname
+const toBase = (url) => {
+  let urlAdressWithOutProtocol = url.host + url.pathname
+
   if (urlAdressWithOutProtocol.length > 200) {
     urlAdressWithOutProtocol = urlAdressWithOutProtocol.slice(0, 200)
   }
-  let ext = path.extname(urlObject.pathname)
+  let ext = path.extname(url.pathname)
 
   if (ext) {
     urlAdressWithOutProtocol = urlAdressWithOutProtocol.slice(0, -ext.length)
@@ -14,7 +14,6 @@ export default function getRightName(url, teg = '.html', baseName) {
   else {
     const regCheckLastSimbol = /[^A-Za-z0-9]$/g
     urlAdressWithOutProtocol = urlAdressWithOutProtocol.replace(regCheckLastSimbol, '')
-    ext = teg
   }
 
   const regChangeSimbols = /[^A-Za-z0-9]/g
@@ -23,7 +22,25 @@ export default function getRightName(url, teg = '.html', baseName) {
   let getRightName = urlAdressWithOutProtocol.replace(regChangeSimbols, '-')
   getRightName = getRightName.replace(regChangeEnDash, '')
 
-  getRightName = getRightName + ext
-
   return getRightName
+}
+
+export const getPageName = (urlString) => {
+  const urlObject = new URL(urlString)
+  return toBase(new URL(urlString)) + (path.extname(urlObject.pathname) || '.html')
+}
+
+export const getAssetName = (urlString) => {
+  const urlObject = new URL(urlString)
+  let ext = path.extname(urlObject.pathname)
+  if (ext) {
+    return toBase(new URL(urlString)) + ext
+  }
+  else {
+    return toBase(new URL(urlString))
+  }
+}
+
+export const getAssetsDir = (urlString) => {
+  return toBase(new URL(urlString)) + '_files'
 }
