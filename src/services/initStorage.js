@@ -2,6 +2,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import { getAssetsDir, getPageName } from '../helpers/fileName.js'
 import debug from 'debug'
+
 const debugPageLoader = debug('page-loader')
 
 export default function initStorage(output, address) {
@@ -18,5 +19,5 @@ export default function initStorage(output, address) {
   }).catch((error) => {
     debugPageLoader(`Failed to create assets directory: ${error.message}`)
     throw error
-  }).then(() => { return { pathPageHtml, pathFiles } })
+  }).then(() => ({ pathPageHtml, pathFiles }))
 }

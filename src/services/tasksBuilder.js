@@ -1,26 +1,21 @@
-import axios from 'axios'
-import { addLogger } from 'axios-debug-log'
+import http from '../helpers/http.js'
 import fs from 'fs/promises'
 import debug from 'debug'
-const debugPageLoader = debug('page-loader')
 import chalk from 'chalk'
 
-addLogger(axios)
+const debugPageLoader = debug('page-loader')
 
-export default function tasksBuilder(rightNameLinks) {
+export default function tasksBuilder(links) {
   const tasks = []
-  for (let [rightUrlLink, localPathName] of rightNameLinks) {
+  for (const [rightUrlLink, localPathName] of links) {
     const task = {
       title: rightUrlLink.toString(),
       task: () => {
-        return axios({
-          method: 'get',
-          url: rightUrlLink,
-          responseType: 'arraybuffer',
-        }).then((response) => {
-          debugPageLoader(chalk.green(`Created a new task for URL:${rightUrlLink}`))
-          return fs.writeFile(localPathName, response.data)
-        }).then(() => debugPageLoader(chalk.green(`Successfully wrote file to: ${localPathName}`)))
+        return http.get(rightUrlLink, 'arraybuffer')
+          .then((response) => {
+            debugPageLoader(chalk.green(`Created a new task for URL:${rightUrlLink}`))
+            return fs.writeFile(localPathName, response.data)
+          }).then(() => debugPageLoader(chalk.green(`Successfully wrote file to: ${localPathName}`)))
           .catch((e) => {
             debugPageLoader(chalk.red(`Task failed for ${rightUrlLink}: ${e.message}`))
             throw e

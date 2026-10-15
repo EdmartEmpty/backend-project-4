@@ -6,20 +6,25 @@ import parsePage from './services/parsePage.js'
 import tasksRunner from './services/tasksRunner.js'
 
 export default function loader(address, output = process.cwd()) {
-  const url = validatorUrl(address)
-
-  let pathPageHtml
-  let parseHtmlPageFromPromise
-
-  return Promise.all([getPageContent(url), initStorage(output, address)])
+  return new Promise((res, rej) => {
+    try {
+      const url = validatorUrl(address)
+      res(Promise.all([getPageContent(url), initStorage(output, address)]))
+    }
+    catch (error) {
+      rej(error)
+    }
+  })
     .then(([pageContent, pathsStorage]) => {
-      pathPageHtml = pathsStorage.pathPageHtml
+      const pathPageHtml = pathsStorage.pathPageHtml
       const pathFiles = pathsStorage.pathFiles
-      const [rightNameLinks, parseHtmlPage] = parsePage(pageContent, address, pathFiles)
-      parseHtmlPageFromPromise = parseHtmlPage
-      return tasksRunner(rightNameLinks)
+      const { links, html } = parsePage(pageContent, address, pathFiles)
+      tasksRunner(links)
+      return [pathPageHtml, html]
     })
-    .then(() => fs.writeFile(pathPageHtml, parseHtmlPageFromPromise))
-    .then(() => console.log(`Page was successfully downloaded into '${pathPageHtml}'`))
-    .catch((error) => { throw new Error(`File system error  ${error}`, { cause: error }) })
+    .then(([pathPageHtml, parseHtmlPageFromPromise]) => {
+      fs.writeFile(pathPageHtml, parseHtmlPageFromPromise)
+      return pathPageHtml
+    })
+    .then(pathPageHtml => console.log(`Page was successfully downloaded into '${pathPageHtml}'`))
 }

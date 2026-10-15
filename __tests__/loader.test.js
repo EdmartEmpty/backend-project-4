@@ -9,7 +9,7 @@ import process from 'process'
 import loader from '../src/loader.js'
 import os from 'os'
 import nock from 'nock'
-import { getPageName, getAssetName, getAssetsDir } from '../src/helpers/fileName.js'
+import { getPageName } from '../src/helpers/fileName.js'
 
 nock.disableNetConnect()
 

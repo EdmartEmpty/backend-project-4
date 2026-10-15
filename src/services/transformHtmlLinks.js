@@ -4,12 +4,13 @@ import chalk from 'chalk'
 import { getAssetName, getAssetsDir, getPageName } from '../helpers/fileName.js'
 const debugPageLoader = debug('page-loader')
 
-export default function transformHtmlLinks(elementType, attrName, page, address, pathFiles) {
+export default function transformHtmlLinks(elementType, attrName, selector, address, pathFiles) {
   debugPageLoader(chalk.red(`Started processing tag:${elementType}`))
 
-  const rightNameLinks = []
-  page(elementType).each((i, el) => {
-    const link = page(el).attr(attrName)
+  const links = []
+  const asserDirName = getAssetsDir(address)
+  selector(elementType).each((i, el) => {
+    const link = selector(el).attr(attrName)
     if (!link) {
       return
     }
@@ -22,12 +23,11 @@ export default function transformHtmlLinks(elementType, attrName, page, address,
 
     const rightNameLink = attrName === 'href' ? getPageName(new URL(rightUrlLink)) : getAssetName(new URL(rightUrlLink))
     const localPathName = path.join(pathFiles, rightNameLink)
-    const asserDirName = getAssetsDir(address)
 
-    page(el).attr(attrName, `${asserDirName}/${rightNameLink}`)
+    selector(el).attr(attrName, `${asserDirName}/${rightNameLink}`)
     debugPageLoader(`Updated attribute for tag ${elementType} to ${asserDirName}/${rightNameLink}`)
-    rightNameLinks.push([rightUrlLink, localPathName])
+    links.push([rightUrlLink, localPathName])
   })
 
-  return rightNameLinks
+  return links
 }
