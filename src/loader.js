@@ -19,12 +19,11 @@ export default function loader(address, output = process.cwd()) {
       const pathPageHtml = pathsStorage.pathPageHtml
       const pathFiles = pathsStorage.pathFiles
       const { links, html } = parsePage(pageContent, address, pathFiles)
-      return new Promise((res,rej) => {
-        tasksRunner(links)
-        res([pathPageHtml, html])
-      })
+      const passedData = Promise.resolve([pathPageHtml, html])
+      return Promise.all([tasksRunner(links), passedData])
     })
-    .then(([pathPageHtml, parseHtmlPageFromPromise]) => {
+    .then((passedData) => {
+      const [pathPageHtml, parseHtmlPageFromPromise] = passedData[1]
       fs.writeFile(pathPageHtml, parseHtmlPageFromPromise)
       return pathPageHtml
     })
