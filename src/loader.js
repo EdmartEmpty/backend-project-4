@@ -15,11 +15,11 @@ export default function loader(address, output = process.cwd()) {
       rej(error)
     }
   })
-    .then(([pageContent, pathsStorage]) => {
+    .then(async ([pageContent, pathsStorage]) => {
       const pathPageHtml = pathsStorage.pathPageHtml
       const pathFiles = pathsStorage.pathFiles
       const { links, html } = parsePage(pageContent, address, pathFiles)
-      tasksRunner(links)
+      await tasksRunner(links)
       return [pathPageHtml, html]
     })
     .then(([pathPageHtml, parseHtmlPageFromPromise]) => {
