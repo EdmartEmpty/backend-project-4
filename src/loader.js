@@ -15,12 +15,14 @@ export default function loader(address, output = process.cwd()) {
       rej(error)
     }
   })
-    .then(async ([pageContent, pathsStorage]) => {
+    .then(([pageContent, pathsStorage]) => {
       const pathPageHtml = pathsStorage.pathPageHtml
       const pathFiles = pathsStorage.pathFiles
       const { links, html } = parsePage(pageContent, address, pathFiles)
-      await tasksRunner(links)
-      return [pathPageHtml, html]
+      return new Promise((res,rej) => {
+        tasksRunner(links)
+        res([pathPageHtml, html])
+      })
     })
     .then(([pathPageHtml, parseHtmlPageFromPromise]) => {
       fs.writeFile(pathPageHtml, parseHtmlPageFromPromise)

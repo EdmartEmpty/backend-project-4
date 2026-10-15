@@ -8,8 +8,15 @@ program.version('1.0.0.')
   .option('-o, --output [dir]', 'output dir (default: "/app)')
   .argument('<url>')
   .action((url) => {
-    const option = program.opts().output || process.cwd()
-    return loader(url, option).catch((error) => {
+    return new Promise((res, rej) => {
+      try {
+        const option = program.opts().output || process.cwd()
+        res(loader(url, option))
+      }
+      catch (error) {
+        rej(error)
+      }
+    }).catch((error) => {
       console.error(`Failed to download page: ${error.message}`)
       process.exit(1)
     })
